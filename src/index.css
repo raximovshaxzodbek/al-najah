@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+  font-family: "Montserrat", sans-serif;
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'arabic-font';
+  src: url("./assets/fonts/KFGQPC Uthmanic Script HAFS.otf");
+}
+
+.arabic-text {
+  font-family: 'arabic-font';
+}
+
+.circle {
+  box-shadow:
+    0px 1px 1px 0px rgba(0, 0, 0, 0.12),
+    0px 0px 0px 1px rgba(0, 0, 0, 0.64),
+    0px 2px 5px 0px rgba(103, 110, 118, 0.08);
+}
+
+footer {
+  width: 100%;
+  min-height: 400px;
+  background: url("./assets/images/footer-bg.png") no-repeat center;
+  background-size: cover;
+}
