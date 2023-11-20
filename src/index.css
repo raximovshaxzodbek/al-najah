@@ -9,12 +9,12 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: 'arabic-font';
+  font-family: "arabic-font";
   src: url("./assets/fonts/KFGQPC Uthmanic Script HAFS.otf");
 }
 
 .arabic-text {
-  font-family: 'arabic-font';
+  font-family: "arabic-font";
 }
 
 .circle {
@@ -24,9 +24,7 @@
     0px 2px 5px 0px rgba(103, 110, 118, 0.08);
 }
 
-footer {
-  width: 100%;
-  min-height: 400px;
+.login {
   background: url("./assets/images/footer-bg.png") no-repeat center;
   background-size: cover;
 }
