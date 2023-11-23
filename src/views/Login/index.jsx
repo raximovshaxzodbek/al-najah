@@ -67,7 +67,7 @@ export default function Login() {
   return (
     <>
       <div className="login flex min-h-[500px] flex-col items-center justify-center gap-5 mt-12 bg-[#F7F7F7]">
-        <div className="flex w-[400px] mt-6 flex-col items-start justify-center gap-5 rounded-[20px] bg-[#ffffffe5] p-10">
+        <div className="flex w-[400px] mt-6 flex-col items-start justify-center z-10 gap-5 rounded-[20px] bg-[#ffffffe0] p-10">
           <h1 className="text-start text-2xl font-bold">Tizimga kirish</h1>
           <TextField
             id="login"
@@ -99,7 +99,7 @@ export default function Login() {
             {isLoading ? <span>Loading...</span> : <span>Davom etish</span>}
           </Button>
         </div>
-        <a href="https://t.me/najah_arab_tili" target="_blank">
+        <a href="https://t.me/najah_arab_tili" className="z-10" target="_blank">
           <Button
             size="large"
             className={"flex gap-3 p-2"}

@@ -74,6 +74,11 @@ export default function TaskOneQuestion1() {
       console.error(error.message);
       setIsLoading(false);
     }
+
+    window.onbeforeunload = () => false;
+    return () => {
+      window.onbeforeunload = null;
+    };
   }, []);
 
   useEffect(() => {

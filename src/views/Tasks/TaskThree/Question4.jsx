@@ -45,7 +45,7 @@ export default function TaskThreeQuestion4() {
     const blob = new Blob([audioData], { type: "video/webm" });
 
     // Extract the file name from the original audioData
-    const fileName = `3.4.${task.id}.webm`;
+    const fileName = `3.4.${task.id}.${task.topic}.webm`;
 
     // Use the actual file name if available in audioData
 
@@ -66,6 +66,11 @@ export default function TaskThreeQuestion4() {
       setTask(data);
     };
     getTask();
+
+    window.onbeforeunload = () => false;
+    return () => {
+      window.onbeforeunload = null;
+    };
   }, []);
 
   useEffect(() => {
@@ -155,7 +160,7 @@ export default function TaskThreeQuestion4() {
         </div>
         <div className="flex w-full flex-col gap-[20px] py-4">
           <h1 className="arabic-text text-center text-2xl font-normal text-[#118FCE] md:text-2xl">
-            أنت في الجزء الأول
+            أنت في الجزء الثالث
           </h1>
           <div className="flex flex-col items-center gap-3">
             <h2 className="arabic-text text-xl font-normal md:text-4xl">

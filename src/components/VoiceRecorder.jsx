@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 
 const VoiceRecorder = ({ downloadOnSavePress }) => {
@@ -10,6 +10,10 @@ const VoiceRecorder = ({ downloadOnSavePress }) => {
     audio.src = url;
     audio.controls = true;
   };
+
+  setTimeout(() => {
+    recorderControls.stopRecording();
+  }, 6000);
 
   return (
     <div className="mt-2 flex w-full flex-col items-center justify-center gap-4">

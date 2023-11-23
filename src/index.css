@@ -24,7 +24,28 @@
     0px 2px 5px 0px rgba(103, 110, 118, 0.08);
 }
 
-.login {
+footer {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  height: 50vh;
+  top: 50%;
   background: url("./assets/images/footer-bg.png") no-repeat center;
-  background-size: cover;
+  background-size: contain;
+}
+
+.user {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logout {
+  display: none;
+}
+
+.user:hover .logout {
+  display: flex;
 }

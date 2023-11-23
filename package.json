@@ -1,7 +1,7 @@
 {
   "name": "al-najah",
   "private": true,
-  "version": "1.0.0",
+  "version": "3.17.10",
   "type": "module",
   "scripts": {
     "dev": "vite",
