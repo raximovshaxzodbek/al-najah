@@ -14,7 +14,7 @@ export default function AuthContextProvider({ children }) {
 
   const UID = uuidv4();
 
-  const URL = "http://192.168.142.238:8000";
+  const URL = "https://alnajah.pythonanywhere.com";
 
   const Content = {
     UID,
