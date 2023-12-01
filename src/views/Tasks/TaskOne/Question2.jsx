@@ -47,7 +47,7 @@ export default function TaskOneQuestion2() {
     const blob = new Blob([audioData], { type: "video/webm" });
 
     // Extract the file name from the original audioData
-    const fileName = `1.2.${task.id}.webm`; // Use the actual file name if available in audioData
+    const fileName = `${task.question}`; // Use the actual file name if available in audioData
 
     // Send the audio data to the server
     addAudioToDatabase(blob, fileName);
@@ -71,6 +71,7 @@ export default function TaskOneQuestion2() {
     } catch (error) {
       console.error(error.message);
       setIsLoading(false);
+      window.location.href = "/";
     }
 
     window.onbeforeunload = () => false;

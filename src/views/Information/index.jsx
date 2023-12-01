@@ -33,6 +33,7 @@ export default function Information() {
             id_code: UID,
             name: name,
             surname: surname,
+            middle_name: fatherName,
           },
           {
             headers: {

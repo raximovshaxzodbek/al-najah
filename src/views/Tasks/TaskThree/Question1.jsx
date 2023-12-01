@@ -7,10 +7,15 @@ import taskQuestionAudio from "../../../assets/audio/task1/question1.aac";
 import Must3 from "../../../assets/audio/musts/must3.aac";
 
 export default function TaskThreeQuestion1() {
-  const { UID, URL, part3_question_time, part3_waiting_time } =
-    useContext(AuthContext);
+  const {
+    UID,
+    URL,
+    part3_question_time,
+    part3_waiting_time,
+    setPartThreeData,
+    partThreeData,
+  } = useContext(AuthContext);
 
-  const [task, setTask] = useState({});
   const [warningSecond, setWarningSecond] = useState(part3_waiting_time);
   const [second, setSecond] = useState(part3_question_time);
 
@@ -39,6 +44,7 @@ export default function TaskThreeQuestion1() {
       });
     } catch (error) {
       console.error(error);
+      window.location.href = "/";
     }
   };
 
@@ -47,7 +53,7 @@ export default function TaskThreeQuestion1() {
     const blob = new Blob([audioData], { type: "video/webm" });
 
     // Extract the file name from the original audioData
-    const fileName = `3.1.${task.id}.${task.topic}.webm`;
+    const fileName = `${partThreeData.question1}.webm`;
 
     // Use the actual file name if available in audioData
 
@@ -65,7 +71,7 @@ export default function TaskThreeQuestion1() {
           }`,
         },
       });
-      setTask(data);
+      setPartThreeData(data);
     };
     getTask();
 
@@ -104,7 +110,7 @@ export default function TaskThreeQuestion1() {
     }
   }, [warningSecond, second, oneAudio, twoAudio, threeAudio]);
 
-  const playlist = [Must3, taskQuestionAudio, URL + task.audio1];
+  const playlist = [Must3, taskQuestionAudio, URL + partThreeData.audio1];
 
   const handleEndedOneAudio = () => {
     setOneAudio(true);
@@ -177,7 +183,7 @@ export default function TaskThreeQuestion1() {
           </h1>
           <div className="flex flex-col items-center gap-3">
             <h2 className="arabic-text text-xl font-normal md:text-4xl">
-              ١ {task.question1}
+              ١ {partThreeData.question1}
             </h2>
           </div>
         </div>

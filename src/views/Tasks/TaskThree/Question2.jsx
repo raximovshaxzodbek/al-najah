@@ -6,10 +6,14 @@ import { AuthContext } from "../../../hooks/Context/AuthContext";
 import taskQuestionAudio from "../../../assets/audio/task1/question2.aac";
 
 export default function TaskThreeQuestion2() {
-  const { UID, URL, part3_question_time, part3_waiting_time } =
-    useContext(AuthContext);
+  const {
+    UID,
+    URL,
+    part3_question_time,
+    part3_waiting_time,
+    partThreeData,
+  } = useContext(AuthContext);
 
-  const [task, setTask] = useState({});
   const [warningSecond, setWarningSecond] = useState(part3_waiting_time);
   const [second, setSecond] = useState(part3_question_time);
 
@@ -37,6 +41,7 @@ export default function TaskThreeQuestion2() {
       });
     } catch (error) {
       console.error(error);
+      window.location.href = "/";
     }
   };
 
@@ -45,33 +50,13 @@ export default function TaskThreeQuestion2() {
     const blob = new Blob([audioData], { type: "video/webm" });
 
     // Extract the file name from the original audioData
-    const fileName = `3.2.${task.id}.${task.topic}.webm`;
+    const fileName = `${partThreeData.question2}.webm`;
 
     // Use the actual file name if available in audioData
 
     // Send the audio data to the server
     addAudioToDatabase(blob, fileName);
   };
-
-  useEffect(() => {
-    const getTask = async () => {
-      const { data } = await Axios.get("part3/", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem("jwtToken")).access
-          }`,
-        },
-      });
-      setTask(data);
-    };
-    getTask();
-
-    window.onbeforeunload = () => false;
-    return () => {
-      window.onbeforeunload = null;
-    };
-  }, []);
 
   useEffect(() => {
     if (oneAudio && twoAudio) {
@@ -102,7 +87,7 @@ export default function TaskThreeQuestion2() {
     }
   }, [warningSecond, second, oneAudio, twoAudio]);
 
-  const playlist = [taskQuestionAudio, URL + task.audio2];
+  const playlist = [taskQuestionAudio, URL + partThreeData.audio2];
 
   const handleEndedOneAudio = () => {
     setOneAudio(true);
@@ -164,7 +149,7 @@ export default function TaskThreeQuestion2() {
           </h1>
           <div className="flex flex-col items-center gap-3">
             <h2 className="arabic-text text-xl font-normal md:text-4xl">
-              ٢ {task.question2}
+              ٢ {partThreeData.question2}
             </h2>
           </div>
         </div>

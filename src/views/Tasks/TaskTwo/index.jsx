@@ -40,6 +40,7 @@ export default function TaskTwo() {
       });
     } catch (error) {
       console.error(error);
+      window.location.href = "/";
     }
   };
 
@@ -48,7 +49,7 @@ export default function TaskTwo() {
     const blob = new Blob([audioData], { type: "video/webm" });
 
     // Extract the file name from the original audioData
-    const fileName = `2.${task.topic}.webm`; // Use the actual file name if available in audioData
+    const fileName = `${task.topic}.webm`; // Use the actual file name if available in audioData
 
     // Send the audio data to the server
     addAudioToDatabase(blob, fileName);
@@ -179,7 +180,7 @@ export default function TaskTwo() {
               <h2 className="arabic-text text-xl font-normal md:text-4xl">
                 ٤ {task.question4}
               </h2>
-              <h2 className="arabic-text text-xl font-normal md:text-3xl">
+              <h2 className="arabic-text text-xl font-normal md:text-4xl">
                 ٥ {task.question5}
               </h2>
             </div>

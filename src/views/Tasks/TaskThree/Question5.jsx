@@ -1,16 +1,20 @@
 import React, { useState, useEffect, useContext } from "react";
 import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
-import { useNavigate } from "react-router-dom";
 import Axios from "../../../api/Axios";
 import { AuthContext } from "../../../hooks/Context/AuthContext";
 import taskQuestionAudio from "../../../assets/audio/task1/question5.aac";
 import { Button } from "@mui/material";
+import Loading from "../../../components/Loading";
 
 export default function TaskThreeQuestion5() {
-  const { UID, URL, part3_question_time, part3_waiting_time } =
-    useContext(AuthContext);
+  const {
+    UID,
+    URL,
+    part3_question_time,
+    part3_waiting_time,
+    partThreeData,
+  } = useContext(AuthContext);
 
-  const [task, setTask] = useState({});
   const [warningSecond, setWarningSecond] = useState(part3_waiting_time);
   const [second, setSecond] = useState(part3_question_time);
   const [uploading, setUploading] = useState(false);
@@ -20,8 +24,6 @@ export default function TaskThreeQuestion5() {
 
   const recorderControls = useAudioRecorder();
 
-  const navigate = useNavigate();
-
   const addAudioToDatabase = async (blob, fileName) => {
     const formData = new FormData();
     formData.append("id_code", UID);
@@ -29,7 +31,7 @@ export default function TaskThreeQuestion5() {
     formData.append("status", "True");
 
     try {
-      Axios.post("audio/", formData, {
+      const data = Axios.post("audio/", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${
@@ -37,46 +39,21 @@ export default function TaskThreeQuestion5() {
           }`,
         },
       });
-      setUploading(true);
+      console.log(data);
+      setTimeout(() => {
+        setUploading(true);
+      }, 5000);
     } catch (error) {
       console.error(error);
+      window.location.href = "/";
     }
   };
 
   const handleRecordingComplete = async (audioData) => {
-    // Convert the audioData to a Blob
     const blob = new Blob([audioData], { type: "video/webm" });
-
-    // Extract the file name from the original audioData
-    const fileName = `3.5.${task.id}.${task.topic}.webm`;
-
-    // Use the actual file name if available in audioData
-
-    // Send the audio data to the server
+    const fileName = `${partThreeData.question5}.webm`;
     addAudioToDatabase(blob, fileName);
   };
-
-  useEffect(() => {
-    const getTask = async () => {
-      const { data } = await Axios.get("part3/", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem("jwtToken")).access
-          }`,
-        },
-      });
-      setTask(data);
-    };
-    getTask();
-
-    localStorage.getItem("user") ?? navigate("/");
-
-    window.onbeforeunload = () => false;
-    return () => {
-      window.onbeforeunload = null;
-    };
-  }, [localStorage.getItem("user")]);
 
   useEffect(() => {
     if (oneAudio && twoAudio) {
@@ -105,7 +82,7 @@ export default function TaskThreeQuestion5() {
     }
   }, [warningSecond, second, oneAudio, twoAudio]);
 
-  const playlist = [taskQuestionAudio, URL + task.audio5];
+  const playlist = [taskQuestionAudio, URL + partThreeData.audio5];
 
   const handleEndedOneAudio = () => {
     setOneAudio(true);
@@ -117,7 +94,7 @@ export default function TaskThreeQuestion5() {
 
   const handleSubmit = () => {
     window.location.href = "/";
-    localStorage.removeItem("user");
+    localStorage.setItem("user", false);
   };
 
   return (
@@ -172,7 +149,7 @@ export default function TaskThreeQuestion5() {
           </h1>
           <div className="flex flex-col items-center gap-3">
             <h2 className="arabic-text text-xl font-normal md:text-4xl">
-              ٥ {task.question5}
+              ٥ {partThreeData.question5}
             </h2>
           </div>
         </div>
@@ -204,7 +181,7 @@ export default function TaskThreeQuestion5() {
             </div>
           </div>
         )}
-        {second === 0 && uploading && (
+        {uploading ? (
           <div className="flex justify-center">
             <a href={`${URL}/download/${UID}/`}>
               <Button
@@ -216,6 +193,8 @@ export default function TaskThreeQuestion5() {
               </Button>
             </a>
           </div>
+        ) : (
+          <Loading />
         )}
       </div>
     </>

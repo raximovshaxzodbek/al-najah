@@ -2,7 +2,6 @@ import React from "react";
 import Logo from "../assets/images/logo.png";
 import { FaUserCircle } from "react-icons/fa";
 import { IoLogOutOutline } from "react-icons/io5";
-import { useNavigate } from "react-router-dom";
 
 const User = ({ logOut }) => {
   if (localStorage.getItem("jwtToken")) {
@@ -21,11 +20,11 @@ const User = ({ logOut }) => {
 };
 
 export default function Navbar() {
-  const navigate = useNavigate();
 
   const logOut = () => {
     localStorage.removeItem("jwtToken");
-    navigate("/");
+    localStorage.setItem("user", false);
+    window.location.href = "/"
   };
 
   return (
