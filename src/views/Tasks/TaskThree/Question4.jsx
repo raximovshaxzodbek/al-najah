@@ -149,7 +149,7 @@ export default function TaskThreeQuestion4() {
           </h1>
           <div className="flex flex-col items-center gap-3">
             <h2 className="arabic-text text-xl font-normal md:text-4xl">
-              ٤ {partThreeData.question4}
+              <span className="number">٤</span> {partThreeData.question4}
             </h2>
           </div>
         </div>

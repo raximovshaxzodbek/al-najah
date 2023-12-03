@@ -144,7 +144,7 @@ export default function TaskThreeQuestion5() {
           </h1>
           <div className="flex flex-col items-center gap-3">
             <h2 className="arabic-text text-xl font-normal md:text-4xl">
-              ٥ {partThreeData.question5}
+              <span className="number">٥</span> {partThreeData.question5}
             </h2>
           </div>
         </div>
@@ -179,12 +179,19 @@ export default function TaskThreeQuestion5() {
         {second > 0 ? null : (
           <div className="flex w-full justify-center">
             {uploading ? (
-              <div className="flex justify-center">
-                <a href={`${URL}/download/${UID}/`} onClick={handleSubmit}>
-                  <Button variant="contained" color="warning">
-                    Tugatishni tasdiqlayman
+              <div className="flex flex-col items-center justify-center gap-2">
+                <a href={`${URL}/download/${UID}/`}>
+                  <Button variant="contained" color="success">
+                    Audiolarni yuklab olish
                   </Button>
                 </a>
+                <Button
+                  variant="contained"
+                  color="warning"
+                  onClick={handleSubmit}
+                >
+                  Tugatishni tasdiqlayman
+                </Button>
               </div>
             ) : (
               <ReactLoading

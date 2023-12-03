@@ -185,7 +185,7 @@ export default function TaskOneQuestion1() {
             </h1>
             <div className="flex flex-col items-center gap-3">
               <h2 className="arabic-text text-xl font-normal md:text-4xl">
-                ١ {task.question}
+                <span className="number">١</span> {task.question}
               </h2>
             </div>
           </div>

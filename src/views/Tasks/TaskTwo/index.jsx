@@ -169,19 +169,19 @@ export default function TaskTwo() {
           {isLoading ? (
             <div className="flex flex-col items-center gap-2">
               <h2 className="arabic-text text-xl font-normal md:text-4xl">
-                ١ {task.question1}
+                <span className="number">١</span> {task.question1}
               </h2>
               <h2 className="arabic-text text-xl font-normal md:text-4xl">
-                ٢ {task.question2}
+                <span className="number">٢</span> {task.question2}
               </h2>
               <h2 className="arabic-text text-xl font-normal md:text-4xl">
-                ٣ {task.question3}
+                <span className="number">٣</span> {task.question3}
               </h2>
               <h2 className="arabic-text text-xl font-normal md:text-4xl">
-                ٤ {task.question4}
+                <span className="number">٤</span> {task.question4}
               </h2>
               <h2 className="arabic-text text-xl font-normal md:text-4xl">
-                ٥ {task.question5}
+                <span className="number">٥</span> {task.question5}
               </h2>
             </div>
           ) : (
