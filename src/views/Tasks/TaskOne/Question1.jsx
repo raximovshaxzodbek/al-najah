@@ -8,18 +8,8 @@ import Must1 from "../../../assets/audio/musts/must1.aac";
 import taskQuestionAudio from "../../../assets/audio/task1/question1.aac";
 
 export default function TaskOneQuestion1() {
-  const {
-    UID,
-    URL,
-    part1_question_time,
-    part1_waiting_time,
-    setPart1_question_time,
-    setPart1_waiting_time,
-    setPart2_question_time,
-    setPart2_waiting_time,
-    setPart3_question_time,
-    setPart3_waiting_time,
-  } = useContext(AuthContext);
+  const { UID, URL, part1_question_time, part1_waiting_time } =
+    useContext(AuthContext);
 
   const [task, setTask] = useState({});
   const [warningSecond, setWarningSecond] = useState(part1_waiting_time);
@@ -59,7 +49,7 @@ export default function TaskOneQuestion1() {
     const blob = new Blob([audioData], { type: "video/webm" });
 
     // Extract the file name from the original audioData
-    const fileName = `${task.question}`; // Use the actual file name if available in audioData
+    const fileName = `${task.question}.webm`; // Use the actual file name if available in audioData
 
     // Send the audio data to the server
     addAudioToDatabase(blob, fileName);
@@ -79,24 +69,6 @@ export default function TaskOneQuestion1() {
         setTask(data[0]);
       };
       getTask();
-
-      const getSettings = async () => {
-        const { data } = await Axios.get("settings/", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${
-              JSON.parse(localStorage.getItem("jwtToken")).access
-            }`,
-          },
-        });
-        setPart1_question_time(data.part1_question_time);
-        setPart1_waiting_time(data.part1_waiting_time);
-        setPart2_question_time(data.part2_question_time);
-        setPart2_waiting_time(data.part2_waiting_time);
-        setPart3_question_time(data.part3_question_time);
-        setPart3_waiting_time(data.part3_waiting_time);
-      };
-      getSettings();
       setIsLoading(true);
     } catch (error) {
       console.error(error.message);

@@ -47,7 +47,7 @@ export default function TaskOneQuestion2() {
     const blob = new Blob([audioData], { type: "video/webm" });
 
     // Extract the file name from the original audioData
-    const fileName = `${task.question}`; // Use the actual file name if available in audioData
+    const fileName = `${task.question}.webm`; // Use the actual file name if available in audioData
 
     // Send the audio data to the server
     addAudioToDatabase(blob, fileName);

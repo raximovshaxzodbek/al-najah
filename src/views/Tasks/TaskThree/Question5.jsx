@@ -4,16 +4,11 @@ import Axios from "../../../api/Axios";
 import { AuthContext } from "../../../hooks/Context/AuthContext";
 import taskQuestionAudio from "../../../assets/audio/task1/question5.aac";
 import { Button } from "@mui/material";
-import Loading from "../../../components/Loading";
+import ReactLoading from "react-loading";
 
 export default function TaskThreeQuestion5() {
-  const {
-    UID,
-    URL,
-    part3_question_time,
-    part3_waiting_time,
-    partThreeData,
-  } = useContext(AuthContext);
+  const { UID, URL, part3_question_time, part3_waiting_time, partThreeData } =
+    useContext(AuthContext);
 
   const [warningSecond, setWarningSecond] = useState(part3_waiting_time);
   const [second, setSecond] = useState(part3_question_time);
@@ -181,20 +176,25 @@ export default function TaskThreeQuestion5() {
             </div>
           </div>
         )}
-        {uploading ? (
-          <div className="flex justify-center">
-            <a href={`${URL}/download/${UID}/`}>
-              <Button
-                variant="contained"
-                onClick={handleSubmit}
-                color="warning"
-              >
-                Tugatishni tasdiqlayman
-              </Button>
-            </a>
+        {second > 0 ? null : (
+          <div className="flex w-full justify-center">
+            {uploading ? (
+              <div className="flex justify-center">
+                <a href={`${URL}/download/${UID}/`} onClick={handleSubmit}>
+                  <Button variant="contained" color="warning">
+                    Tugatishni tasdiqlayman
+                  </Button>
+                </a>
+              </div>
+            ) : (
+              <ReactLoading
+                type="spinningBubbles"
+                color={"#000"}
+                width={50}
+                height={50}
+              />
+            )}
           </div>
-        ) : (
-          <Loading />
         )}
       </div>
     </>

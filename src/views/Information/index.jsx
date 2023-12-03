@@ -6,13 +6,25 @@ import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import Axios from "../../api/Axios";
 import { AuthContext } from "../../hooks/Context/AuthContext";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Information() {
-  const { UID } = useContext(AuthContext);
+  const {
+    UID,
+    SETUID,
+    setPart1_question_time,
+    setPart1_waiting_time,
+    setPart2_question_time,
+    setPart2_waiting_time,
+    setPart3_question_time,
+    setPart3_waiting_time,
+  } = useContext(AuthContext);
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
   const [fatherName, setFatherName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  const uid = uuidv4();
 
   const warning = () =>
     toast.warning("Barcha qatorlarni to'ldirishingiz talab qilinadi!");
@@ -49,7 +61,7 @@ export default function Information() {
         setName("");
         setSurname("");
         setFatherName("");
-        localStorage.setItem("user", true)
+        localStorage.setItem("user", true);
         navigate("/task_id=1/question=1");
       } catch (error) {
         setIsLoading(false);
@@ -62,6 +74,8 @@ export default function Information() {
   };
 
   useEffect(() => {
+    SETUID(uid);
+
     try {
       if (localStorage.getItem("jwtToken")) {
         const getStatus = async () => {
@@ -76,20 +90,36 @@ export default function Information() {
           if (data.status === "False") {
             warningStatus();
             localStorage.removeItem("jwtToken");
-            navigate("/");
+            window.location.href = "/";
           }
         };
         getStatus();
-      }
 
-      localStorage.getItem("jwtToken") ?? navigate("/");
+        const getSettings = async () => {
+          const { data } = await Axios.get("settings/", {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${
+                JSON.parse(localStorage.getItem("jwtToken")).access
+              }`,
+            },
+          });
+          setPart1_question_time(data.part1_question_time);
+          setPart1_waiting_time(data.part1_waiting_time);
+          setPart2_question_time(data.part2_question_time);
+          setPart2_waiting_time(data.part2_waiting_time);
+          setPart3_question_time(data.part3_question_time);
+          setPart3_waiting_time(data.part3_waiting_time);
+        };
+        getSettings();
+      }
     } catch (error) {
       console.error(error);
     }
   }, []);
 
   return (
-    <div className="flex min-h-[400px] flex-col items-center justify-center gap-3 bg-[#F7F7F7] mt-8">
+    <div className="mt-8 flex min-h-[400px] flex-col items-center justify-center gap-3 bg-[#F7F7F7]">
       <div className="flex w-[400px]  flex-col items-start justify-center gap-3 rounded-[20px] bg-[#fff] p-8">
         <div className="flex w-full flex-col gap-5">
           <h1 className="text-start text-xl font-bold">
