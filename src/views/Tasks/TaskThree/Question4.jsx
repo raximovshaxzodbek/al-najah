@@ -3,7 +3,7 @@ import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 import { useNavigate } from "react-router-dom";
 import Axios from "../../../api/Axios";
 import { AuthContext } from "../../../hooks/Context/AuthContext";
-import taskQuestionAudio from "../../../assets/audio/task1/question4.aac";
+import taskQuestionAudio from "../../../assets/audio/question4.aac";
 
 export default function TaskThreeQuestion4() {
   const { UID, URL, part3_question_time, part3_waiting_time, partThreeData } =

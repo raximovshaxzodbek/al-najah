@@ -2,9 +2,8 @@ import React, { useState, useEffect, useContext } from "react";
 import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 import { useNavigate } from "react-router-dom";
 import Axios from "../../../api/Axios";
-import Loading from "../../../components/Loading";
 import { AuthContext } from "../../../hooks/Context/AuthContext";
-import taskQuestionAudio from "../../../assets/audio/task1/question5.aac";
+import taskQuestionAudio from "../../../assets/audio/question5.aac";
 
 export default function TaskOneQuestion5() {
   const { UID, URL, part1_question_time, part1_waiting_time, partOneData } =

@@ -11,6 +11,7 @@ export default function AuthContextProvider({ children }) {
   const [part3_waiting_time, setPart3_waiting_time] = useState(0);
   const [partThreeData, setPartThreeData] = useState({});
   const [partOneData, setPartOneData] = useState({});
+  const [must, setMust] = useState({});
   const [UID, SETUID] = useState("");
 
   const URL = "https://alnajah.pythonanywhere.com";
@@ -35,6 +36,8 @@ export default function AuthContextProvider({ children }) {
     partThreeData,
     setPartOneData,
     partOneData,
+    setMust,
+    must
   };
 
   return (

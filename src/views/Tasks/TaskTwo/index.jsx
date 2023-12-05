@@ -5,16 +5,14 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../../../components/Loading";
 import Axios from "../../../api/Axios";
 import { AuthContext } from "../../../hooks/Context/AuthContext";
-import Must2 from "../../../assets/audio/musts/must2.aac";
 
 export default function TaskTwo() {
-  const { UID, URL, part2_question_time, part2_waiting_time } =
+  const { UID, URL, part2_question_time, part2_waiting_time, must } =
     useContext(AuthContext);
 
   const [second, setSecond] = useState(part2_question_time);
   const [warningSecond, setWarningSecond] = useState(part2_waiting_time);
   const [task, setTask] = useState({});
-  const [must, setMust] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   const [oneAudio, setOneAudio] = useState(false);
@@ -71,19 +69,6 @@ export default function TaskTwo() {
         setIsLoading(true);
       };
       getTask();
-
-      const getMust = async () => {
-        const { data } = await Axios.get("shart/", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${
-              JSON.parse(localStorage.getItem("jwtToken")).access
-            }`,
-          },
-        });
-        setMust(data.audio);
-      };
-      getMust();
     } catch (error) {
       setIsLoading(false);
       console.error(error);
@@ -119,8 +104,6 @@ export default function TaskTwo() {
     }
   }, [warningSecond, second, oneAudio, twoAudio]);
 
-  const playlist = [Must2, URL + task.audio];
-
   const handleEndedOneAudio = () => {
     setOneAudio(true);
   };
@@ -131,16 +114,18 @@ export default function TaskTwo() {
 
   return (
     <>
-      <audio onEnded={handleEndedOneAudio} autoPlay>
-        <source src={playlist[0]} />
-        {/* Replace with the actual source of your audio file */}
-      </audio>
+      <audio
+        src={URL + must?.audio2}
+        onEnded={handleEndedOneAudio}
+        autoPlay
+      ></audio>
 
       {oneAudio && (
-        <audio onEnded={handleEndedTwoAudio} autoPlay>
-          <source src={playlist[1]} />
-          {/* Replace with the actual source of your audio file */}
-        </audio>
+        <audio
+          src={URL + task.audio}
+          onEnded={handleEndedTwoAudio}
+          autoPlay
+        ></audio>
       )}
 
       <div

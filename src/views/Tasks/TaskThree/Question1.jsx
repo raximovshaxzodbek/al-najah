@@ -3,8 +3,7 @@ import { AudioRecorder, useAudioRecorder } from "react-audio-voice-recorder";
 import { useNavigate } from "react-router-dom";
 import Axios from "../../../api/Axios";
 import { AuthContext } from "../../../hooks/Context/AuthContext";
-import taskQuestionAudio from "../../../assets/audio/task1/question1.aac";
-import Must3 from "../../../assets/audio/musts/must3.aac";
+import taskQuestionAudio from "../../../assets/audio/question1.aac";
 
 export default function TaskThreeQuestion1() {
   const {
@@ -14,9 +13,9 @@ export default function TaskThreeQuestion1() {
     part3_waiting_time,
     setPartThreeData,
     partThreeData,
+    must,
   } = useContext(AuthContext);
 
-  const [must, setMust] = useState({});
   const [warningSecond, setWarningSecond] = useState(part3_waiting_time);
   const [second, setSecond] = useState(part3_question_time);
 
@@ -76,19 +75,6 @@ export default function TaskThreeQuestion1() {
     };
     getTask();
 
-    const getMust = async () => {
-      const { data } = await Axios.get("shart/", {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${
-            JSON.parse(localStorage.getItem("jwtToken")).access
-          }`,
-        },
-      });
-      setMust(data.audio);
-    };
-    getMust();
-
     window.onbeforeunload = () => false;
     return () => {
       window.onbeforeunload = null;
@@ -124,8 +110,6 @@ export default function TaskThreeQuestion1() {
     }
   }, [warningSecond, second, oneAudio, twoAudio, threeAudio]);
 
-  const playlist = [Must3, taskQuestionAudio, URL + partThreeData.audio1];
-
   const handleEndedOneAudio = () => {
     setOneAudio(true);
   };
@@ -140,23 +124,26 @@ export default function TaskThreeQuestion1() {
 
   return (
     <>
-      <audio onEnded={handleEndedOneAudio} autoPlay>
-        <source src={playlist[0]} />
-        {/* Replace with the actual source of your audio file */}
-      </audio>
+      <audio
+        src={URL + must?.audio3}
+        onEnded={handleEndedOneAudio}
+        autoPlay
+      ></audio>
 
       {oneAudio && (
-        <audio onEnded={handleEndedTwoAudio} autoPlay>
-          <source src={playlist[1]} />
-          {/* Replace with the actual source of your audio file */}
-        </audio>
+        <audio
+          src={taskQuestionAudio}
+          onEnded={handleEndedTwoAudio}
+          autoPlay
+        ></audio>
       )}
 
       {oneAudio && twoAudio ? (
-        <audio onEnded={handleEndedThreeAudio} autoPlay>
-          <source src={playlist[2]} />
-          {/* Replace with the actual source of your audio file */}
-        </audio>
+        <audio
+          src={URL + partThreeData.audio1}
+          onEnded={handleEndedThreeAudio}
+          autoPlay
+        ></audio>
       ) : null}
       <div
         className={
