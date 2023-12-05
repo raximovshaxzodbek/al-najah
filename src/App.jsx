@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { Navbar, Router } from "./components/Imports";
 import { useNavigate } from "react-router-dom";
+import Axios from "./api/Axios";
 
 export default function App() {
   const navigate = useNavigate("");

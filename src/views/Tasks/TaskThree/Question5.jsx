@@ -143,9 +143,11 @@ export default function TaskThreeQuestion5() {
             أنت في الجزء الثالث
           </h1>
           <div className="flex flex-col items-center gap-3">
-            <h2 className="arabic-text text-xl font-normal md:text-4xl">
-              <span className="number">٥</span> {partThreeData.question5}
-            </h2>
+            {oneAudio && twoAudio ? (
+              <h2 className="arabic-text text-xl font-normal md:text-4xl">
+                <span className="number">٥</span> {partThreeData.question5}
+              </h2>
+            ) : null}
           </div>
         </div>
         {warningSecond === 0 && second !== 0 && (

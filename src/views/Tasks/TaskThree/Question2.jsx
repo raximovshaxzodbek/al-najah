@@ -6,13 +6,8 @@ import { AuthContext } from "../../../hooks/Context/AuthContext";
 import taskQuestionAudio from "../../../assets/audio/task1/question2.aac";
 
 export default function TaskThreeQuestion2() {
-  const {
-    UID,
-    URL,
-    part3_question_time,
-    part3_waiting_time,
-    partThreeData,
-  } = useContext(AuthContext);
+  const { UID, URL, part3_question_time, part3_waiting_time, partThreeData } =
+    useContext(AuthContext);
 
   const [warningSecond, setWarningSecond] = useState(part3_waiting_time);
   const [second, setSecond] = useState(part3_question_time);
@@ -148,9 +143,11 @@ export default function TaskThreeQuestion2() {
             أنت في الجزء الثالث
           </h1>
           <div className="flex flex-col items-center gap-3">
-            <h2 className="arabic-text text-xl font-normal md:text-4xl">
-              <span className="number">٢</span> {partThreeData.question2}
-            </h2>
+            {oneAudio && twoAudio ? (
+              <h2 className="arabic-text text-xl font-normal md:text-4xl">
+                <span className="number">٢</span> {partThreeData.question2}
+              </h2>
+            ) : null}
           </div>
         </div>
         {warningSecond === 0 && second !== 0 && (

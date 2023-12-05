@@ -4,14 +4,20 @@ import { useNavigate } from "react-router-dom";
 import Axios from "../../../api/Axios";
 import Loading from "../../../components/Loading";
 import { AuthContext } from "../../../hooks/Context/AuthContext";
-import Must1 from "../../../assets/audio/musts/must1.aac";
 import taskQuestionAudio from "../../../assets/audio/task1/question1.aac";
+import Must1 from "../../../assets/audio/musts/must1.aac";
 
 export default function TaskOneQuestion1() {
-  const { UID, URL, part1_question_time, part1_waiting_time } =
-    useContext(AuthContext);
+  const {
+    UID,
+    URL,
+    part1_question_time,
+    part1_waiting_time,
+    setPartOneData,
+    partOneData,
+  } = useContext(AuthContext);
 
-  const [task, setTask] = useState({});
+  const [must, setMust] = useState({});
   const [warningSecond, setWarningSecond] = useState(part1_waiting_time);
   const [second, setSecond] = useState(part1_question_time);
   const [isLoading, setIsLoading] = useState(false);
@@ -49,7 +55,7 @@ export default function TaskOneQuestion1() {
     const blob = new Blob([audioData], { type: "video/webm" });
 
     // Extract the file name from the original audioData
-    const fileName = `1_${task.question}.webm`; // Use the actual file name if available in audioData
+    const fileName = `1_${partOneData[0].question}.webm`; // Use the actual file name if available in audioData
 
     // Send the audio data to the server
     addAudioToDatabase(blob, fileName);
@@ -57,19 +63,35 @@ export default function TaskOneQuestion1() {
 
   useEffect(() => {
     try {
-      const getTask = async () => {
-        const { data } = await Axios.get("part1/", {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${
-              JSON.parse(localStorage.getItem("jwtToken")).access
-            }`,
-          },
-        });
-        setTask(data[0]);
-      };
-      getTask();
-      setIsLoading(true);
+      if (localStorage.getItem("jwtToken")) {
+        const getQuestion1 = async () => {
+          const { data } = await Axios.get("part1/", {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${
+                JSON.parse(localStorage.getItem("jwtToken")).access
+              }`,
+            },
+          });
+          setPartOneData(data);
+        };
+        getQuestion1();
+
+        const getMust = async () => {
+          const { data } = await Axios.get("shart/", {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${
+                JSON.parse(localStorage.getItem("jwtToken")).access
+              }`,
+            },
+          });
+          setMust(data.audio);
+        };
+        getMust();
+
+        setIsLoading(true);
+      }
     } catch (error) {
       console.error(error.message);
       setIsLoading(false);
@@ -111,7 +133,7 @@ export default function TaskOneQuestion1() {
     }
   }, [warningSecond, second, oneAudio, twoAudio, threeAudio]);
 
-  const playlist = [Must1, taskQuestionAudio, URL + task.audio];
+  const playlist = [Must1, taskQuestionAudio, URL + partOneData[0]?.audio];
 
   const handleEndedOneAudio = () => {
     setOneAudio(true);
@@ -184,9 +206,11 @@ export default function TaskOneQuestion1() {
               أنت في الجزء الأول
             </h1>
             <div className="flex flex-col items-center gap-3">
-              <h2 className="arabic-text text-xl font-normal md:text-4xl">
-                <span className="number">١</span> {task.question}
-              </h2>
+              {oneAudio && twoAudio ? (
+                <h2 className="arabic-text text-xl font-normal md:text-4xl">
+                  <span className="number">١</span> {partOneData[0]?.question}
+                </h2>
+              ) : null}
             </div>
           </div>
           {warningSecond === 0 && second !== 0 && (

@@ -14,6 +14,7 @@ export default function TaskTwo() {
   const [second, setSecond] = useState(part2_question_time);
   const [warningSecond, setWarningSecond] = useState(part2_waiting_time);
   const [task, setTask] = useState({});
+  const [must, setMust] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   const [oneAudio, setOneAudio] = useState(false);
@@ -70,6 +71,19 @@ export default function TaskTwo() {
         setIsLoading(true);
       };
       getTask();
+
+      const getMust = async () => {
+        const { data } = await Axios.get("shart/", {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${
+              JSON.parse(localStorage.getItem("jwtToken")).access
+            }`,
+          },
+        });
+        setMust(data.audio);
+      };
+      getMust();
     } catch (error) {
       setIsLoading(false);
       console.error(error);
@@ -168,21 +182,25 @@ export default function TaskTwo() {
           </h1>
           {isLoading ? (
             <div className="flex flex-col items-center gap-2">
-              <h2 className="arabic-text text-xl font-normal md:text-4xl">
-                <span className="number">١</span> {task.question1}
-              </h2>
-              <h2 className="arabic-text text-xl font-normal md:text-4xl">
-                <span className="number">٢</span> {task.question2}
-              </h2>
-              <h2 className="arabic-text text-xl font-normal md:text-4xl">
-                <span className="number">٣</span> {task.question3}
-              </h2>
-              <h2 className="arabic-text text-xl font-normal md:text-4xl">
-                <span className="number">٤</span> {task.question4}
-              </h2>
-              <h2 className="arabic-text text-xl font-normal md:text-4xl">
-                <span className="number">٥</span> {task.question5}
-              </h2>
+              {oneAudio ? (
+                <>
+                  <h2 className="arabic-text text-xl font-normal md:text-4xl">
+                    <span className="number">١</span> {task.question1}
+                  </h2>
+                  <h2 className="arabic-text text-xl font-normal md:text-4xl">
+                    <span className="number">٢</span> {task.question2}
+                  </h2>
+                  <h2 className="arabic-text text-xl font-normal md:text-4xl">
+                    <span className="number">٣</span> {task.question3}
+                  </h2>
+                  <h2 className="arabic-text text-xl font-normal md:text-4xl">
+                    <span className="number">٤</span> {task.question4}
+                  </h2>
+                  <h2 className="arabic-text text-xl font-normal md:text-4xl">
+                    <span className="number">٥</span> {task.question5}
+                  </h2>
+                </>
+              ) : null}
             </div>
           ) : (
             <Loading />

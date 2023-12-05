@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
 export default function ErrorPage() {
   return (
-    <div className='w-full h-screen flex justify-center items-center'>
-      <h1>404 Error Page</h1>
-      </div>
-  )
+    <div className="error-page flex h-[70vh] w-full items-center justify-center pb-[370px]">
+      <a href="/" className="text-3xl">Bosh sahifaga qaytish</a>
+    </div>
+  );
 }

@@ -84,9 +84,7 @@ export default function Login() {
         <div className="z-10 mt-6 flex w-[400px] flex-col items-start justify-center gap-5 rounded-[20px] bg-[#ffffffe0] p-10">
           <h1 className="text-start text-2xl font-bold">Tizimga kirish</h1>
           <div className="relative flex w-full flex-col">
-            <labal for="login" className="pb-1 text-black/80">
-              Login
-            </labal>
+            <p className="pb-1 text-black/80">Login</p>
             <input
               type="login"
               id="login"
@@ -96,9 +94,7 @@ export default function Login() {
             />
           </div>
           <div className="relative flex w-full flex-col">
-            <labal for="password" className="pb-1 text-black/80">
-              Password
-            </labal>
+            <p className="pb-1 text-black/80">Password</p>
             <input
               type="password"
               id="password"

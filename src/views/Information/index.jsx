@@ -28,7 +28,7 @@ export default function Information() {
 
   const warning = () =>
     toast.warning("Barcha qatorlarni to'ldirishingiz talab qilinadi!");
-  const warningError = () => toast.warning("Ro'yhatdan o'tmaganmisiz!");
+  const warningError = () => toast.warning("Ro'yxatdan o'tmaganmisiz!");
   const success = () => toast.success("Ma'lumotlaringiz saqlandi.");
 
   const warningStatus = () => toast.warning("A'zolik mudati tugagan!");
@@ -123,7 +123,7 @@ export default function Information() {
       <div className="flex w-[400px]  flex-col items-start justify-center gap-3 rounded-[20px] bg-[#fff] p-8">
         <div className="flex w-full flex-col gap-5">
           <h1 className="text-start text-xl font-bold">
-            Ma’lumotlaringizni kiritnig
+            Ma’lumotlaringizni kiriting
           </h1>
           <TextField
             id="name"

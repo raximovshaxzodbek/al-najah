@@ -16,6 +16,7 @@ export default function TaskThreeQuestion1() {
     partThreeData,
   } = useContext(AuthContext);
 
+  const [must, setMust] = useState({});
   const [warningSecond, setWarningSecond] = useState(part3_waiting_time);
   const [second, setSecond] = useState(part3_question_time);
 
@@ -74,6 +75,19 @@ export default function TaskThreeQuestion1() {
       setPartThreeData(data);
     };
     getTask();
+
+    const getMust = async () => {
+      const { data } = await Axios.get("shart/", {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${
+            JSON.parse(localStorage.getItem("jwtToken")).access
+          }`,
+        },
+      });
+      setMust(data.audio);
+    };
+    getMust();
 
     window.onbeforeunload = () => false;
     return () => {
@@ -182,9 +196,11 @@ export default function TaskThreeQuestion1() {
             أنت في الجزء الثالث
           </h1>
           <div className="flex flex-col items-center gap-3">
-            <h2 className="arabic-text text-xl font-normal md:text-4xl">
-              <span className="number">١</span> {partThreeData.question1}
-            </h2>
+            {oneAudio && twoAudio ? (
+              <h2 className="arabic-text text-xl font-normal md:text-4xl">
+                <span className="number">١</span> {partThreeData.question1}
+              </h2>
+            ) : null}
           </div>
         </div>
         {warningSecond === 0 && second !== 0 && (
