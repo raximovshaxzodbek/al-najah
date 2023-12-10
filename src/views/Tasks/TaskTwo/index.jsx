@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Loading from "../../../components/Loading";
 import Axios from "../../../api/Axios";
 import { AuthContext } from "../../../hooks/Context/AuthContext";
+import rington from "../../../assets/audio/rington.mp3";
 
 export default function TaskTwo() {
   const { UID, URL, part2_question_time, part2_waiting_time, must } =
@@ -17,6 +18,7 @@ export default function TaskTwo() {
 
   const [oneAudio, setOneAudio] = useState(false);
   const [twoAudio, setTwoAudio] = useState(false);
+  const [isRington, setIsRington] = useState(false);
 
   const recorderControls = useAudioRecorder();
 
@@ -112,6 +114,10 @@ export default function TaskTwo() {
     setTwoAudio(true);
   };
 
+  const handleEndedIsRington = () => {
+    setIsRington(true);
+  };
+
   return (
     <>
       <audio
@@ -126,6 +132,13 @@ export default function TaskTwo() {
           onEnded={handleEndedTwoAudio}
           autoPlay
         ></audio>
+      )}
+
+      {warningSecond === 0 && (
+        <audio onEnded={handleEndedIsRington} autoPlay>
+          <source src={rington} />
+          {/* Replace with the actual source of your audio file */}
+        </audio>
       )}
 
       <div
@@ -191,7 +204,7 @@ export default function TaskTwo() {
             <Loading />
           )}
         </div>
-        {warningSecond === 0 && second !== 0 && (
+        {warningSecond === 0 && second !== 0 && isRington && (
           <div className="flex w-full justify-center">
             <div className="flex w-full flex-col items-center justify-center">
               <AudioRecorder

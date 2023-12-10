@@ -4,21 +4,18 @@ import { useNavigate } from "react-router-dom";
 import Axios from "../../../api/Axios";
 import { AuthContext } from "../../../hooks/Context/AuthContext";
 import taskQuestionAudio from "../../../assets/audio/question3.aac";
+import rington from "../../../assets/audio/rington.mp3";
 
 export default function TaskThreeQuestion3() {
-  const {
-    UID,
-    URL,
-    part3_question_time,
-    part3_waiting_time,
-    partThreeData,
-  } = useContext(AuthContext);
+  const { UID, URL, part3_question_time, part3_waiting_time, partThreeData } =
+    useContext(AuthContext);
 
   const [warningSecond, setWarningSecond] = useState(part3_waiting_time);
   const [second, setSecond] = useState(part3_question_time);
 
   const [oneAudio, setOneAudio] = useState(false);
   const [twoAudio, setTwoAudio] = useState(false);
+  const [isRington, setIsRington] = useState(false);
 
   const recorderControls = useAudioRecorder();
 
@@ -41,7 +38,7 @@ export default function TaskThreeQuestion3() {
       });
     } catch (error) {
       console.error(error);
-      window.location.href = "/"
+      window.location.href = "/";
     }
   };
 
@@ -97,6 +94,10 @@ export default function TaskThreeQuestion3() {
     setTwoAudio(true);
   };
 
+  const handleEndedIsRington = () => {
+    setIsRington(true);
+  };
+
   return (
     <>
       <audio onEnded={handleEndedOneAudio} autoPlay>
@@ -110,6 +111,14 @@ export default function TaskThreeQuestion3() {
           {/* Replace with the actual source of your audio file */}
         </audio>
       )}
+
+      {oneAudio && twoAudio && warningSecond === 0 && (
+        <audio onEnded={handleEndedIsRington} autoPlay>
+          <source src={rington} />
+          {/* Replace with the actual source of your audio file */}
+        </audio>
+      )}
+
       <div
         className={
           "mb-[60px] mt-[60px] flex w-full flex-col justify-center gap-[40px] rounded-[20px] bg-white p-10"
@@ -155,7 +164,7 @@ export default function TaskThreeQuestion3() {
             ) : null}
           </div>
         </div>
-        {warningSecond === 0 && second !== 0 && (
+        {warningSecond === 0 && second !== 0 && isRington && (
           <div className="flex w-full justify-center">
             <div className="mt-2 flex w-full flex-col items-center justify-center gap-4">
               <AudioRecorder

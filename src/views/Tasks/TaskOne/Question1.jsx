@@ -5,6 +5,7 @@ import Axios from "../../../api/Axios";
 import Loading from "../../../components/Loading";
 import { AuthContext } from "../../../hooks/Context/AuthContext";
 import taskQuestionAudio from "../../../assets/audio/question1.aac";
+import rington from "../../../assets/audio/rington.mp3";
 
 export default function TaskOneQuestion1() {
   const {
@@ -25,6 +26,7 @@ export default function TaskOneQuestion1() {
   const [oneAudio, setOneAudio] = useState(false);
   const [twoAudio, setTwoAudio] = useState(false);
   const [threeAudio, setThreeAudio] = useState(false);
+  const [isRington, setIsRington] = useState(false);
 
   const recorderControls = useAudioRecorder();
 
@@ -145,6 +147,10 @@ export default function TaskOneQuestion1() {
     setThreeAudio(true);
   };
 
+  const handleEndedIsRington = () => {
+    setIsRington(true);
+  };
+
   return (
     <>
       <audio
@@ -166,6 +172,14 @@ export default function TaskOneQuestion1() {
           {/* Replace with the actual source of your audio file */}
         </audio>
       ) : null}
+
+      {oneAudio && twoAudio && threeAudio && warningSecond === 0 ? (
+        <audio onEnded={handleEndedIsRington} autoPlay>
+          <source src={rington} />
+          {/* Replace with the actual source of your audio file */}
+        </audio>
+      ) : null}
+
       {isLoading && must ? (
         <div
           className={
@@ -212,7 +226,7 @@ export default function TaskOneQuestion1() {
               ) : null}
             </div>
           </div>
-          {warningSecond === 0 && second !== 0 && (
+          {warningSecond === 0 && second !== 0 && isRington && (
             <div className="flex w-full justify-center">
               <div className="mt-2 flex w-full flex-col items-center justify-center gap-4">
                 <AudioRecorder

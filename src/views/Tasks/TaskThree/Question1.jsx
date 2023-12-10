@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import Axios from "../../../api/Axios";
 import { AuthContext } from "../../../hooks/Context/AuthContext";
 import taskQuestionAudio from "../../../assets/audio/question1.aac";
+import rington from "../../../assets/audio/rington.mp3";
 
 export default function TaskThreeQuestion1() {
   const {
@@ -22,6 +23,7 @@ export default function TaskThreeQuestion1() {
   const [oneAudio, setOneAudio] = useState(false);
   const [twoAudio, setTwoAudio] = useState(false);
   const [threeAudio, setThreeAudio] = useState(false);
+  const [isRington, setIsRington] = useState(false);
 
   const recorderControls = useAudioRecorder();
 
@@ -122,6 +124,10 @@ export default function TaskThreeQuestion1() {
     setThreeAudio(true);
   };
 
+  const handleEndedIsRington = () => {
+    setIsRington(true);
+  };
+
   return (
     <>
       <audio
@@ -145,6 +151,11 @@ export default function TaskThreeQuestion1() {
           autoPlay
         ></audio>
       ) : null}
+
+      {oneAudio && twoAudio && warningSecond === 0 ? (
+        <audio src={rington} onEnded={handleEndedIsRington} autoPlay></audio>
+      ) : null}
+
       <div
         className={
           "mt-[30px] flex w-full flex-col justify-center gap-[40px] rounded-[20px] bg-white p-10"
@@ -190,7 +201,7 @@ export default function TaskThreeQuestion1() {
             ) : null}
           </div>
         </div>
-        {warningSecond === 0 && second !== 0 && (
+        {warningSecond === 0 && second !== 0 && isRington && (
           <div className="flex w-full justify-center">
             <div className="mt-2 flex w-full flex-col items-center justify-center gap-4">
               <AudioRecorder
